@@ -1,2 +1,46 @@
+/* Basic styling */
+.player {
+  max-width: 640px;
+  margin: 0 auto;
+  background: #333;
+  text-align: center;
+  padding: 20px;
+}
 
-/* Your CSS Code here. */
+.player__controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.player__button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.player__button:hover {
+  color: #ccc;
+}
+
+.progress {
+  flex: 1;
+  height: 5px;
+  position: relative;
+  background: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.progress__filled {
+  background: #ffc600;
+  width: 0%;
+  height: 100%;
+  transition: width 0.3s;
+}
+
+.player__slider {
+  width: 60px;
+}
