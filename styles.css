@@ -13,7 +13,7 @@
   margin-top: 10px;
 }
 
-.player__button {
+.rewind {
   background: none;
   border: none;
   color: white;
@@ -21,7 +21,7 @@
   cursor: pointer;
 }
 
-.player__button:hover {
+.rewind:hover {
   color: #ccc;
 }
 

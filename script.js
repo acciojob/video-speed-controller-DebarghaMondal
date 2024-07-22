@@ -3,7 +3,7 @@ const progress = document.querySelector('.progress__filled');
 const toggle = document.querySelector('.toggle');
 const volume = document.querySelector('input[name="volume"]');
 const playbackRate = document.querySelector('input[name="playbackRate"]');
-const skipButtons = document.querySelectorAll('.player__button[data-skip]');
+const skipButtons = document.querySelectorAll('.rewind[data-skip]');
 
 function togglePlay() {
   if (video.paused) {
