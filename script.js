@@ -1,55 +1,51 @@
-const video = document.querySelector('.player__video');
-const progress = document.querySelector('.progress__filled');
-const toggle = document.querySelector('.toggle');
-const volume = document.querySelector('input[name="volume"]');
-const playbackRate = document.querySelector('input[name="playbackRate"]');
-const skipButtons = document.querySelectorAll('.rewind[data-skip]');
+const inputs = document.querySelectorAll('.controls input');
+const player = document.querySelector(".player");
+const video = player.querySelector(".viewer");
+const progress = player.querySelector(".progress");
+const progressBar = player.querySelector(".progress__filled");
+const toggle = player.querySelector(".toggle");
+const skipButtons = player.querySelectorAll("[data-skip]");
+const ranges = player.querySelectorAll(".player__slider");
+
+    function handleUpdate() {
+      const suffix = this.dataset.sizing || '';
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+    }
+toggle.addEventListener("click", togglePlay);
+
+    inputs.forEach(input => input.addEventListener('change', handleUpdate));
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+video.addEventListener("timeupdate", handlerProgress);
+
+for (let skip of skipButtons) {
+  skip.addEventListener("click", forwardOrBackward);
+}
+
+for (let range of ranges) {
+  range.addEventListener("change", handleRangeUpdate);
+}
 
 function togglePlay() {
   if (video.paused) {
     video.play();
+    toggle.innerText = "❚ ❚";
   } else {
     video.pause();
+    toggle.innerText = "►";
   }
 }
 
-function updateButton() {
-  const icon = video.paused ? '►' : '❚ ❚';
-  toggle.textContent = icon;
+function handlerProgress() {
+  const currentProgress = (video.currentTime / video.duration) * 100;
+  progressBar.style.flexBasis = `${currentProgress}%`;
 }
 
-function handleProgress() {
-  const percent = (video.currentTime / video.duration) * 100;
-  progress.style.flexBasis = `${percent}%`;
+function forwardOrBackward(event) {
+  let element = event.target;
+  video.currentTime += parseFloat(element.attributes["data-skip"].value);
 }
 
-function scrub(e) {
-  const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
-  video.currentTime = scrubTime;
+function handleRangeUpdate(event) {
+  let element = event.target;
+  video[element.name] = element.value;
 }
-
-function skip() {
-  video.currentTime += parseFloat(this.dataset.skip);
-}
-
-function handleRangeUpdate() {
-  video[this.name] = this.value;
-}
-
-// Event listeners
-video.addEventListener('click', togglePlay);
-video.addEventListener('play', updateButton);
-video.addEventListener('pause', updateButton);
-video.addEventListener('timeupdate', handleProgress);
-
-toggle.addEventListener('click', togglePlay);
-
-skipButtons.forEach(button => button.addEventListener('click', skip));
-
-volume.addEventListener('change', handleRangeUpdate);
-volume.addEventListener('mousemove', handleRangeUpdate);
-
-playbackRate.addEventListener('change', handleRangeUpdate);
-playbackRate.addEventListener('mousemove', handleRangeUpdate);
-
-progress.addEventListener('click', scrub);
