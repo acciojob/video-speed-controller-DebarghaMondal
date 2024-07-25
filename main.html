@@ -191,6 +191,7 @@ input[type="range"]::-moz-range-thumb {
           <div class="progress__filled"></div>
         </div>
         <button class="player__button toggle" title="Toggle Play">►</button>
+		  <button class="player__button rewind">« Rewind</button>
         <input
           type="range"
           name="volume"
@@ -219,6 +220,11 @@ input[type="range"]::-moz-range-thumb {
 
 <script  src="./script.js">
   //Your code goes here
+	const rewind = player.querySelector(".rewind");
+
+rewind.addEventListener("click", function() {
+  video.currentTime -= 10; // this will rewind your video by 10 seconds
+});
 	const player = document.querySelector(".player");
 const video = player.querySelector(".player__video");
 const progress = player.querySelector(".progress");
